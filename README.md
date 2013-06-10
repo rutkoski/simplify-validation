@@ -1,2 +1,4 @@
 simplify-validation
 ===================
+
+Validation library
