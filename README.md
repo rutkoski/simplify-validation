@@ -70,10 +70,10 @@ Validation using a valid php callback of the format:
 * `Simplify_Validation_Required`
 * `Simplify_Validation_StrictEqual`
 
-Brazilian formats:
+Brazilian formats (validação de formatos brasileiros):
 
-* CEP
-* CNPJ 
+* CEP (validar formato de CEP)
+* CNPJ
 * CPF
 * Telefone
 
