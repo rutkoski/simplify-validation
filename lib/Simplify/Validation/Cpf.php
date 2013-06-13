@@ -23,7 +23,7 @@
  */
 
 /**
- * 
+ *
  * CPF validation
  *
  */
@@ -32,19 +32,13 @@ class Simplify_Validation_Cpf extends Simplify_Validation_AbstractValidation
 
   /**
    *
-   * @var boolean
-   */
-  public $required;
-
-  /**
-   * 
    * @param string $message
    * @param boolean $required
    */
   public function __construct($message, $required = true)
   {
     parent::__construct($message);
-    
+
     $this->required = $required;
   }
 
@@ -54,15 +48,10 @@ class Simplify_Validation_Cpf extends Simplify_Validation_AbstractValidation
    */
   public function validate($value)
   {
-    if (empty($value)) {
-      if ($this->required) {
-        $this->fail();
-      }
-      else {
-        return;
-      }
+    if ($this->required($value)) {
+      return;
     }
-    
+
     if (!$this->validaCPF($value)) {
       $this->fail();
     }
@@ -77,9 +66,11 @@ class Simplify_Validation_Cpf extends Simplify_Validation_AbstractValidation
   protected function validaCPF($cpf)
   { // Verifiva se o número digitado contém todos os digitos
     $cpf = str_pad(ereg_replace('[^0-9]', '', $cpf), 11, '0', STR_PAD_LEFT);
-    
+
     // Verifica se nenhuma das sequências abaixo foi digitada, caso seja, retorna falso
-    if (strlen($cpf) != 11 || $cpf == '00000000000' || $cpf == '11111111111' || $cpf == '22222222222' || $cpf == '33333333333' || $cpf == '44444444444' || $cpf == '55555555555' || $cpf == '66666666666' || $cpf == '77777777777' || $cpf == '88888888888' || $cpf == '99999999999') {
+    if (strlen($cpf) != 11 || $cpf == '00000000000' || $cpf == '11111111111' || $cpf == '22222222222' ||
+       $cpf == '33333333333' || $cpf == '44444444444' || $cpf == '55555555555' || $cpf == '66666666666' ||
+       $cpf == '77777777777' || $cpf == '88888888888' || $cpf == '99999999999') {
       return false;
     }
     else { // Calcula os números para verificar se o CPF é verdadeiro
@@ -87,14 +78,14 @@ class Simplify_Validation_Cpf extends Simplify_Validation_AbstractValidation
         for($d = 0, $c = 0; $c < $t; $c++) {
           $d += $cpf{$c} * (($t + 1) - $c);
         }
-        
+
         $d = ((10 * $d) % 11) % 10;
-        
+
         if ($cpf{$c} != $d) {
           return false;
         }
       }
-      
+
       return true;
     }
   }

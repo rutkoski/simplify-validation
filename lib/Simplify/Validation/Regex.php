@@ -23,7 +23,7 @@
  */
 
 /**
- * 
+ *
  * Use a regular expression to validate data
  *
  */
@@ -39,15 +39,16 @@ class Simplify_Validation_Regex extends Simplify_Validation_AbstractValidation
 
   /**
    * Constructor
-   * 
+   *
    * @param string $message validation fail message
-   * @param string $regex regular expression 
+   * @param string $regex regular expression
    */
-  public function __construct($message, $regex = null)
+  public function __construct($message, $regex = null, $required = true)
   {
     parent::__construct($message);
-    
+
     $this->regex = $regex;
+    $this->required = $required;
   }
 
   /**
@@ -56,6 +57,10 @@ class Simplify_Validation_Regex extends Simplify_Validation_AbstractValidation
    */
   public function validate($value)
   {
+    if ($this->required($value)) {
+      return;
+    }
+
     if (!preg_match($this->regex, $value)) {
       $this->fail();
     }

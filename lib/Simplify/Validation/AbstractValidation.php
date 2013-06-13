@@ -23,12 +23,18 @@
  */
 
 /**
- * 
+ *
  * Base class for validation
  *
  */
 abstract class Simplify_Validation_AbstractValidation implements Simplify_ValidationInterface
 {
+
+  /**
+   *
+   * @var mixed
+   */
+  public $required = null;
 
   /**
    * Error message
@@ -39,7 +45,7 @@ abstract class Simplify_Validation_AbstractValidation implements Simplify_Valida
 
   /**
    * Constructor
-   * 
+   *
    * @param string $message validation fail message
    */
   function __construct($message = '')
@@ -57,13 +63,32 @@ abstract class Simplify_Validation_AbstractValidation implements Simplify_Valida
   }
 
   /**
-   * 
+   *
+   * @param mixed $value
+   */
+  protected function required($value)
+  {
+    if (is_null($this->required)) {
+      return false;
+    }
+
+    if (!$this->required && empty($value)) {
+      return true;
+    }
+
+    if ($this->required && empty($value)) {
+      $this->fail($this->required);
+    }
+  }
+
+  /**
+   *
    * @param string $message
    * @throws Simplify_ValidationException
    */
   protected function fail($message = null)
   {
-    if (empty($message)) {
+    if (! is_string($message)) {
       $message = $this->message;
     }
     throw new Simplify_ValidationException(empty($message) ? 'Validation failed' : $message);

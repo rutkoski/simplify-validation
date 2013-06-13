@@ -31,12 +31,6 @@ class Simplify_Validation_Email extends Simplify_Validation_AbstractValidation
 {
 
   /**
-   *
-   * @var boolean
-   */
-  public $required;
-
-  /**
    * Constructor
    *
    * @param string $message
@@ -55,12 +49,8 @@ class Simplify_Validation_Email extends Simplify_Validation_AbstractValidation
    */
   public function validate($value)
   {
-    if (!$this->required && empty($value)) {
+    if ($this->required($value)) {
       return;
-    }
-
-    if (is_string($this->required) && empty($value)) {
-      $this->fail($this->required);
     }
 
     if (!preg_match('/^[a-z0-9][a-z0-9_\.-]{0,}[a-z0-9]@[a-z0-9][a-z0-9_\.-]{0,}[a-z0-9][\.][a-z0-9]{2,4}$/i', $value)) {

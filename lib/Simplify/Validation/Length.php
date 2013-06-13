@@ -50,12 +50,13 @@ class Simplify_Validation_Length extends Simplify_Validation_AbstractValidation
    * @param int|boolean $min minimun string length or false for no limit
    * @param int|boolean $max maximun string length or false for no limit
    */
-  public function __construct($message, $min = false, $max = false)
+  public function __construct($message, $min = false, $max = false, $required = null)
   {
     parent::__construct($message);
 
     $this->min = $min;
     $this->max = $max;
+    $this->required = $required;
   }
 
   /**
@@ -64,6 +65,10 @@ class Simplify_Validation_Length extends Simplify_Validation_AbstractValidation
    */
   public function validate($value)
   {
+    if ($this->required($value)) {
+      return;
+    }
+
     if (($this->min !== false && strlen($value) < $this->min) || ($this->max !== false && strlen($value) > $this->max)) {
       $this->fail();
     }
