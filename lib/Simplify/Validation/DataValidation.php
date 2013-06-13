@@ -98,16 +98,17 @@ class Simplify_Validation_DataValidation
    *
    * @param mixed[] $data data set
    * @param string $name key in data set
+   * @param boolean $stepValidation if true, only one error will be returned per key
    * @throws Simplify_ValidationException
    */
-  public function validate(&$data, $name = null)
+  public function validate(&$data, $name = null, $stepValidation = true)
   {
     $errors = array();
 
     if (empty($name)) {
       foreach ($this->rules as $name => $rules) {
         try {
-          $this->validate($data, $name);
+          $this->validate($data, $name, $stepValidation);
         }
         catch (Simplify_ValidationException $e) {
           $errors += $e->getErrors();
@@ -121,7 +122,12 @@ class Simplify_Validation_DataValidation
             $rule->validate(sy_get_param($data, $name));
           }
           catch (Simplify_ValidationException $e) {
-            $errors[$name] = $e->getErrors();
+            if ($stepValidation) {
+              $errors[$name] = $e->getErrors();
+              break;
+            } else {
+              $errors[$name][] = $e->getErrors();
+            }
           }
         }
       }
