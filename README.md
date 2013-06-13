@@ -48,6 +48,37 @@ Validation library.
 		var_dump($errors);
 	}
 
+#### Alternative syntax
+
+	try {
+	  require_once('vendor/simplify/validation/lib/autoload.php');
+	
+	  $data = array(
+	    'name' => 'Ford Prefect',
+	    'email' => 'ford.prefect@gmail.com',
+	    'gender' => 'M',
+	    'age' => '23',
+	    'message' => 'Don\'t panic',
+	  );
+	
+	  $rules = new Simplify_Validation_DataValidation(array(
+	    'name' => array(
+	      array('Simplify_Validation_Required', 'Invalid name'),
+	      array('Simplify_Validation_Length', 'Name too short', array('min' => 3))
+	    ),
+	    'email' => array('Simplify_Validation_Email', 'Invalid email!'),
+	    'gender' => array('Simplify_Validation_Enum', 'Invalid gender!', array('enum' => array('M', 'F'))),
+	    'age' => array('Simplify_Validation_Refex', 'Invalid age', array('regex' => '/^\d{2}$/')),
+	    'message' => array('Simplify_Validation_Length', 'Invalid message', array('min' => 1, 'max' => 255)),
+	  ));
+	  $rules->validate($data);
+	}
+	catch (Simplify_ValidationException $e) {
+	  $errors = $e->getErrors();
+	
+	  var_dump($errors);
+	}
+
 ## Available validators
 
 * `Simplify_Validation_Callback`
