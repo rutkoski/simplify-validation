@@ -69,7 +69,7 @@ class Simplify_Validation_Length extends Simplify_Validation_AbstractValidation
       return;
     }
 
-    if (($this->min !== false && strlen($value) < $this->min) || ($this->max !== false && strlen($value) > $this->max)) {
+    if (($this->min !== false && mb_strlen($value) < $this->min) || ($this->max !== false && mb_strlen($value) > $this->max)) {
       $this->fail();
     }
   }
