@@ -119,7 +119,13 @@ class Simplify_Validation_DataValidation
       if (isset($this->rules[$name])) {
         foreach ($this->rules[$name] as $rule) {
           try {
+            if ($name == '*') {
+              foreach ($data as $name => $value) {
             $rule->validate(sy_get_param($data, $name));
+              }
+            } else {
+              $rule->validate(sy_get_param($data, $name));
+            }
           }
           catch (Simplify_ValidationException $e) {
             if ($stepValidation) {
