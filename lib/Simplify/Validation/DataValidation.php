@@ -101,7 +101,7 @@ class Simplify_Validation_DataValidation
    * @param boolean $stepValidation if true, only one error will be returned per key
    * @throws Simplify_ValidationException
    */
-  public function validate(&$data, $name = null, $stepValidation = true)
+  public function validate(&$data, $name = null, $stepValidation = false)
   {
     $errors = array();
 
@@ -111,28 +111,37 @@ class Simplify_Validation_DataValidation
           $this->validate($data, $name, $stepValidation);
         }
         catch (Simplify_ValidationException $e) {
-          $errors = array_merge($errors, $e->getErrors());
+          $errors = array_merge($errors, (array) $e->getErrors());
+
+          if ($stepValidation) {
+            break;
+          }
         }
       }
     }
     else {
       if (isset($this->rules[$name])) {
         foreach ($this->rules[$name] as $rule) {
-          try {
-            if ($name == '*') {
-              foreach ($data as $name => $value) {
-            $rule->validate(sy_get_param($data, $name));
+          if ($name == '*') {
+            foreach ($data as $name => $value) {
+              try {
+                $rule->validate(sy_get_param($data, $name));
               }
-            } else {
-              $rule->validate(sy_get_param($data, $name));
+              catch (Simplify_ValidationException $e) {
+                $errors[$name] = $e->getErrors();
+              }
             }
           }
-          catch (Simplify_ValidationException $e) {
-            if ($stepValidation) {
+          else {
+            try {
+              $rule->validate(sy_get_param($data, $name));
+            }
+            catch (Simplify_ValidationException $e) {
               $errors[$name] = $e->getErrors();
-              break;
-            } else {
-              $errors[$name][] = $e->getErrors();
+
+              if ($stepValidation) {
+                break;
+              }
             }
           }
         }
@@ -141,8 +150,9 @@ class Simplify_Validation_DataValidation
 
     $this->errors = $errors;
 
-    if (!empty($errors))
+    if (!empty($errors)) {
       throw new Simplify_ValidationException($errors);
+    }
   }
 
   /**
