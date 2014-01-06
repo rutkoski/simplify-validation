@@ -111,7 +111,7 @@ class Simplify_Validation_DataValidation
           $this->validate($data, $name, $stepValidation);
         }
         catch (Simplify_ValidationException $e) {
-          $errors += $e->getErrors();
+          $errors = array_merge($errors, $e->getErrors());
         }
       }
     }
