@@ -190,6 +190,14 @@ class Simplify_Validation_DataValidation
    */
   protected function factory($rule, $message, array $params = null)
   {
+    if (!class_exists($rule)) {
+      $rule = 'Simplify_Validation_' . ucfirst(strtolower($rule));
+
+      if (!class_exists($rule)) {
+        throw new InvalidArgumentException('Validation class not found');
+      }
+    }
+
     $Rule = new $rule($message);
 
     foreach ((array) $params as $param => $value) {

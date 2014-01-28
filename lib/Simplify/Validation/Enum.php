@@ -23,7 +23,7 @@
  */
 
 /**
- * 
+ *
  * Validate that value exists in a given set of elements
  *
  */
@@ -44,18 +44,25 @@ class Simplify_Validation_Enum extends Simplify_Validation_AbstractValidation
   public $negate;
 
   /**
+   *
+   * @var boolean
+   */
+  public $keys;
+
+  /**
    * Constructor
-   * 
+   *
    * @param string $message
    * @param mixed[] $enum
    * @param boolean $negate
    */
-  public function __construct($message, array $enum = null, $negate = false)
+  public function __construct($message, array $enum = null, $negate = false, $keys = false)
   {
     parent::__construct($message);
-    
+
     $this->enum = $enum;
     $this->negate = $negate;
+    $this->keys = $keys;
   }
 
   /**
@@ -64,12 +71,27 @@ class Simplify_Validation_Enum extends Simplify_Validation_AbstractValidation
    */
   public function validate($value)
   {
-    if ($this->negate) {
-      if (in_array($value, $this->enum)) {
-        $this->fail();
+    if ($this->required($value)) {
+      return;
+    }
+
+    $enum = (array) $this->enum;
+
+    if ($this->keys) {
+      if ($this->negate) {
+        $fail = isset($enum[$value]);
+      } else {
+        $fail = !isset($enum[$value]);
+      }
+    } else {
+      if ($this->negate) {
+        $fail = in_array($value, $enum);
+      } else {
+        $fail = !in_array($value, $enum);
       }
     }
-    elseif (!in_array($value, $this->enum)) {
+
+    if ($fail) {
       $this->fail();
     }
   }
