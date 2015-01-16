@@ -22,12 +22,14 @@
  * @copyright Copyright 2008 Rodrigo Rutkoski Rodrigues
  */
 
+namespace Simplify\Validation;
+
 /**
  *
  * Validação de CEP
  *
  */
-class Simplify_Validation_Cep extends Simplify_Validation_Regex
+class Cep extends \Simplify\Validation\Regex
 {
 
   /**

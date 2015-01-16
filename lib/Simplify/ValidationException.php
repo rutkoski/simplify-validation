@@ -21,12 +21,14 @@
  * @author Rodrigo Rutkoski Rodrigues <rutkoski@gmail.com>
  */
 
+namespace Simplify;
+
 /**
  *
  * Default exception for validation errors.
  *
  */
-class Simplify_ValidationException extends Exception
+class ValidationException extends \Exception
 {
 
   protected $errors;

@@ -22,12 +22,14 @@
  * @copyright Copyright 2008 Rodrigo Rutkoski Rodrigues
  */
 
+namespace Simplify\Validation;
+
 /**
  *
  * CPF validation
  *
  */
-class Simplify_Validation_Cpf extends Simplify_Validation_AbstractValidation
+class Cpf extends \Simplify\Validation\AbstractValidation
 {
 
   /**
@@ -44,7 +46,7 @@ class Simplify_Validation_Cpf extends Simplify_Validation_AbstractValidation
 
   /**
    * (non-PHPdoc)
-   * @see Simplify_ValidationInterface::validate()
+   * @see \Simplify\ValidationInterface::validate()
    */
   public function validate($value)
   {

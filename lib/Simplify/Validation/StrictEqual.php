@@ -22,12 +22,14 @@
  * @copyright Copyright 2008 Rodrigo Rutkoski Rodrigues
  */
 
+namespace Simplify\Validation;
+
 /**
  *
  * Required value
  *
  */
-class Simplify_Validation_StrictEqual extends Simplify_Validation_AbstractValidation
+class StrictEqual extends \Simplify\Validation\AbstractValidation
 {
 
   /**
@@ -51,7 +53,7 @@ class Simplify_Validation_StrictEqual extends Simplify_Validation_AbstractValida
 
   /**
    * (non-PHPdoc)
-   * @see Simplify_ValidationInterface::validate()
+   * @see \Simplify\ValidationInterface::validate()
    */
   public function validate($value)
   {

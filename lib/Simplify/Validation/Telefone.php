@@ -22,6 +22,8 @@
  * @copyright Copyright 2008 Rodrigo Rutkoski Rodrigues
  */
 
+namespace Simplify\Validation;
+
 /**
  *
  * Validação de telefone
@@ -31,7 +33,7 @@
  * (99) 9999.99999
  *
  */
-class Simplify_Validation_Telefone extends Simplify_Validation_Regex
+class Telefone extends \Simplify\Validation\Regex
 {
 
   /**

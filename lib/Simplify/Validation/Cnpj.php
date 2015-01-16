@@ -22,12 +22,14 @@
  * @copyright Copyright 2008 Rodrigo Rutkoski Rodrigues
  */
 
+namespace Simplify\Validation;
+
 /**
  * 
  * CNPJ valition
  *
  */
-class Simplify_Validation_Cnpj extends Simplify_Validation_AbstractValidation
+class Cnpj extends \Simplify\Validation\AbstractValidation
 {
 
   /**
@@ -50,7 +52,7 @@ class Simplify_Validation_Cnpj extends Simplify_Validation_AbstractValidation
 
   /**
    * (non-PHPdoc)
-   * @see Simplify_ValidationInterface::validate()
+   * @see \Simplify\ValidationInterface::validate()
    */
   public function validate($value)
   {

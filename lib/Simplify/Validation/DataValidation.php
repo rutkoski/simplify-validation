@@ -21,12 +21,14 @@
  * @author Rodrigo Rutkoski Rodrigues, <rutkoski@gmail.com>
  */
 
+namespace Simplify\Validation;
+
 /**
  *
  * Validates data
  *
  */
-class Simplify_Validation_DataValidation
+class DataValidation
 {
 
   /**
@@ -39,7 +41,7 @@ class Simplify_Validation_DataValidation
   /**
    * Validation rules
    *
-   * @var Simplify_ValidationInterface
+   * @var \Simplify\ValidationInterface[]
    */
   protected $rules = array();
 
@@ -57,11 +59,11 @@ class Simplify_Validation_DataValidation
 
   /**
    *
-   * @return Simplify_Validation_DataValidation
+   * @return \Simplify\Validation\DataValidation
    */
   public static function parseFrom($rules)
   {
-    if (!($rules instanceof Simplify_Validation_DataValidation)) {
+    if (!($rules instanceof \Simplify\Validation\DataValidation)) {
       $rules = new self($rules);
     }
 
@@ -82,9 +84,9 @@ class Simplify_Validation_DataValidation
    * Set a validation rule for a given key in a data set
    *
    * @param string $name
-   * @param Simplify_ValidationInterface $rule validation rule
+   * @param \Simplify\ValidationInterface $rule validation rule
    */
-  public function setRule($name, Simplify_ValidationInterface $rule)
+  public function setRule($name, \Simplify\ValidationInterface $rule)
   {
     if (!isset($this->rules[$name])) {
       $this->rules[$name] = array();
@@ -99,9 +101,9 @@ class Simplify_Validation_DataValidation
    * @param mixed[] $data data set
    * @param string $name key in data set
    * @param boolean $stepValidation if true, only one error will be returned per key
-   * @throws Simplify_ValidationException
+   * @throws \Simplify\ValidationException
    */
-  public function validate(&$data, $name = null, $stepValidation = false)
+  public function validate(&$data, $name = null, $stepValidation = true)
   {
     $errors = array();
 
@@ -110,38 +112,23 @@ class Simplify_Validation_DataValidation
         try {
           $this->validate($data, $name, $stepValidation);
         }
-        catch (Simplify_ValidationException $e) {
-          $errors = array_merge($errors, (array) $e->getErrors());
-
-          if ($stepValidation) {
-            break;
-          }
+        catch (\Simplify\ValidationException $e) {
+          $errors += $e->getErrors();
         }
       }
     }
     else {
       if (isset($this->rules[$name])) {
         foreach ($this->rules[$name] as $rule) {
-          if ($name == '*') {
-            foreach ($data as $name => $value) {
-              try {
-                $rule->validate(sy_get_param($data, $name));
-              }
-              catch (Simplify_ValidationException $e) {
-                $errors[$name] = $e->getErrors();
-              }
-            }
+          try {
+            $rule->validate(sy_get_param($data, $name));
           }
-          else {
-            try {
-              $rule->validate(sy_get_param($data, $name));
-            }
-            catch (Simplify_ValidationException $e) {
+          catch (\Simplify\ValidationException $e) {
+            if ($stepValidation) {
               $errors[$name] = $e->getErrors();
-
-              if ($stepValidation) {
-                break;
-              }
+              break;
+            } else {
+              $errors[$name][] = $e->getErrors();
             }
           }
         }
@@ -150,9 +137,8 @@ class Simplify_Validation_DataValidation
 
     $this->errors = $errors;
 
-    if (!empty($errors)) {
-      throw new Simplify_ValidationException($errors);
-    }
+    if (!empty($errors))
+      throw new \Simplify\ValidationException($errors);
   }
 
   /**
@@ -170,7 +156,7 @@ class Simplify_Validation_DataValidation
           $this->setRule($name, $this->factory($_rule[0], $_rule[1], sy_get_param($_rule, 2)));
         }
       }
-      elseif (!($rule instanceof Simplify_ValidationInterface)) {
+      elseif (!($rule instanceof \Simplify\ValidationInterface)) {
         $this->setRule($name, $this->factory($rule[0], $rule[1], sy_get_param($rule, 2)));
       }
       else {
@@ -186,18 +172,10 @@ class Simplify_Validation_DataValidation
    * @param string $message
    * @param mixed[string] $params
    * @throws Exception
-   * @return Simplify_ValidationInterface
+   * @return \Simplify\ValidationInterface
    */
   protected function factory($rule, $message, array $params = null)
   {
-    if (!class_exists($rule)) {
-      $rule = 'Simplify_Validation_' . ucfirst(strtolower($rule));
-
-      if (!class_exists($rule)) {
-        throw new InvalidArgumentException('Validation class not found');
-      }
-    }
-
     $Rule = new $rule($message);
 
     foreach ((array) $params as $param => $value) {

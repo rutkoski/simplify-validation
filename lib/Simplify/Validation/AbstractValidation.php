@@ -22,12 +22,14 @@
  * @copyright Copyright 2008 Rodrigo Rutkoski Rodrigues
  */
 
+namespace Simplify\Validation;
+
 /**
  *
  * Base class for validation
  *
  */
-abstract class Simplify_Validation_AbstractValidation implements Simplify_ValidationInterface
+abstract class AbstractValidation implements \Simplify\ValidationInterface
 {
 
   /**
@@ -55,7 +57,7 @@ abstract class Simplify_Validation_AbstractValidation implements Simplify_Valida
 
   /**
    * (non-PHPdoc)
-   * @see Simplify_ValidationInterface::getError()
+   * @see \Simplify\ValidationInterface::getError()
    */
   public function getError()
   {
@@ -82,16 +84,16 @@ abstract class Simplify_Validation_AbstractValidation implements Simplify_Valida
   }
 
   /**
-   *
-   * @param string $message
-   * @throws Simplify_ValidationException
+   * 
+   * @param unknown_type $message
+   * @throws \Simplify\ValidationException
    */
   protected function fail($message = null)
   {
     if (! is_string($message)) {
       $message = $this->message;
     }
-    throw new Simplify_ValidationException(empty($message) ? 'Validation failed' : $message);
+    throw new \Simplify\ValidationException(empty($message) ? 'Validation failed' : $message);
   }
 
 }

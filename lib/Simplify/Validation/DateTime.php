@@ -22,12 +22,14 @@
  * @copyright Copyright 2008 Rodrigo Rutkoski Rodrigues
  */
 
+namespace Simplify\Validation;
+
 /**
  * 
  * Validate date and time
  * 
  */
-class Simplify_Validation_DateTime extends Simplify_Validation_AbstractValidation
+class DateTime extends \Simplify\Validation\AbstractValidation
 {
 
   /**
@@ -46,7 +48,7 @@ class Simplify_Validation_DateTime extends Simplify_Validation_AbstractValidatio
 
   /**
    * (non-PHPdoc)
-   * @see simplify/kernel/data/validation/IValidation#validate($value)
+   * @see \Simplify\ValidationInterface::validate()
    */
   public function validate($value)
   {

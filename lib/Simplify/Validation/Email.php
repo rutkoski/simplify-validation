@@ -22,12 +22,14 @@
  * @copyright Copyright 2008 Rodrigo Rutkoski Rodrigues
  */
 
+namespace Simplify\Validation;
+
 /**
  *
  * Validate email
  *
  */
-class Simplify_Validation_Email extends Simplify_Validation_AbstractValidation
+class Email extends \Simplify\Validation\AbstractValidation
 {
 
   /**
@@ -45,7 +47,7 @@ class Simplify_Validation_Email extends Simplify_Validation_AbstractValidation
 
   /**
    * (non-PHPdoc)
-   * @see Simplify_ValidationInterface::validate()
+   * @see \Simplify\ValidationInterface::validate()
    */
   public function validate($value)
   {

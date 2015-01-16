@@ -22,13 +22,15 @@
  * @copyright Copyright 2008 Rodrigo Rutkoski Rodrigues
  */
 
+namespace Simplify\Validation;
+
 /**
  * 
  * Organize validation rules by priority
  * Priority 0 is highest, positive numbers are lower priority
  * 
  */
-class Simplify_Validation_Priority extends Simplify_Validation_AbstractValidation
+class Priority extends \Simplify\Validation\AbstractValidation
 {
 
   /**
@@ -57,7 +59,7 @@ class Simplify_Validation_Priority extends Simplify_Validation_AbstractValidatio
 
   /**
    * (non-PHPdoc)
-   * @see Simplify_Validation_AbstractValidation::getError()
+   * @see \Simplify\Validation\AbstractValidation::getError()
    */
   public function getError()
   {
@@ -76,7 +78,7 @@ class Simplify_Validation_Priority extends Simplify_Validation_AbstractValidatio
 
   /**
    * (non-PHPdoc)
-   * @see Simplify_ValidationInterface::validate()
+   * @see \Simplify\ValidationInterface::validate()
    */
   public function validate($value)
   {
@@ -88,7 +90,7 @@ class Simplify_Validation_Priority extends Simplify_Validation_AbstractValidatio
           $rule->validate($value);
         }
         
-        catch (Simplify_ValidationInterface $e) {
+        catch (\Simplify\ValidationInterface $e) {
           $this->lastRule = $rule;
           $this->fail();
         }
@@ -99,11 +101,11 @@ class Simplify_Validation_Priority extends Simplify_Validation_AbstractValidatio
   /**
    * Add a rule to the chain.
    * 
-   * @param Simplify_ValidationInterface $rule validation rule
+   * @param \Simplify\ValidationInterface $rule validation rule
    * @param int $priority priority level for rule
-   * @return Simplify_Validation_Priority
+   * @return \Simplify\Validation\Priority
    */
-  public function addRule(Simplify_ValidationInterface $rule, $priority = 0)
+  public function addRule(\Simplify\ValidationInterface $rule, $priority = 0)
   {
     if (!isset($this->rules[$priority])) {
       $this->rules[$priority] = array();

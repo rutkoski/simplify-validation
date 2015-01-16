@@ -22,12 +22,14 @@
  * @copyright Copyright 2008 Rodrigo Rutkoski Rodrigues
  */
 
+namespace Simplify\Validation;
+
 /**
  *
  * Use a regular expression to validate data
  *
  */
-class Simplify_Validation_Regex extends Simplify_Validation_AbstractValidation
+class Regex extends \Simplify\Validation\AbstractValidation
 {
 
   /**
@@ -53,7 +55,7 @@ class Simplify_Validation_Regex extends Simplify_Validation_AbstractValidation
 
   /**
    * (non-PHPdoc)
-   * @see Simplify_ValidationInterface::validate()
+   * @see \Simplify\ValidationInterface::validate()
    */
   public function validate($value)
   {

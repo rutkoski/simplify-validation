@@ -21,12 +21,14 @@
  * @author Rodrigo Rutkoski Rodrigues <rutkoski@gmail.com>
  */
 
+namespace Simplify;
+
 /**
  * 
  * Interface for data validation
  *
  */
-interface Simplify_ValidationInterface
+interface ValidationInterface
 {
 
   /**
@@ -40,7 +42,7 @@ interface Simplify_ValidationInterface
    * Validates $value
    *
    * @param mixed $value value that has to be validated
-   * @throws Simplify_ValidationException
+   * @throws \Simplify\ValidationException
    * @return void
    */
   public function validate($value);

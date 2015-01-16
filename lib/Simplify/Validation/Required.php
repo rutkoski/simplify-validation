@@ -22,17 +22,19 @@
  * @copyright Copyright 2008 Rodrigo Rutkoski Rodrigues
  */
 
+namespace Simplify\Validation;
+
 /**
  *
  * Required value
  *
  */
-class Simplify_Validation_Required extends Simplify_Validation_AbstractValidation
+class Required extends \Simplify\Validation\AbstractValidation
 {
 
   /**
    * (non-PHPdoc)
-   * @see Simplify_ValidationInterface::validate()
+   * @see \Simplify\ValidationInterface::validate()
    */
   public function validate($value)
   {
