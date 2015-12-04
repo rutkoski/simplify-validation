@@ -43,7 +43,7 @@ class Telefone extends \Simplify\Validation\Regex
    */
   public function __construct($message)
   {
-    parent::__construct($message, '/\(\d{2}\) \d{4}\.\d{4,5}/');
+    parent::__construct($message, '/\(\d{2}\) \d{8,9}/');
   }
 
 }
