@@ -67,7 +67,7 @@ class Cpf extends \Simplify\Validation\AbstractValidation
    */
   protected function validaCPF($cpf)
   { // Verifiva se o número digitado contém todos os digitos
-    $cpf = str_pad(ereg_replace('[^0-9]', '', $cpf), 11, '0', STR_PAD_LEFT);
+    $cpf = str_pad(preg_replace('/[^0-9]/', '', $cpf), 11, '0', STR_PAD_LEFT);
 
     // Verifica se nenhuma das sequências abaixo foi digitada, caso seja, retorna falso
     if (strlen($cpf) != 11 || $cpf == '00000000000' || $cpf == '11111111111' || $cpf == '22222222222' ||
