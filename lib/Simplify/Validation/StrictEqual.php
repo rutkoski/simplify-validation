@@ -57,7 +57,7 @@ class StrictEqual extends \Simplify\Validation\AbstractValidation
    */
   public function validate($value)
   {
-    if ($value === $this->value) {
+    if ($value !== $this->value) {
       $this->fail();
     }
   }
