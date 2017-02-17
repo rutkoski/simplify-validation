@@ -151,7 +151,10 @@ class DataValidation
       if (empty($rule)) {
         continue;
       }
-      if (is_array($rule[0])) {
+      if ($rule instanceof \Simplify\ValidationInterface) {
+          $this->setRule($name, $rule);
+      }
+      elseif (is_array($rule[0])) {
         foreach ($rule as $_rule) {
           $this->setRule($name, $this->factory($_rule[0], $_rule[1], sy_get_param($_rule, 2)));
         }
